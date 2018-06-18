@@ -1,0 +1,8 @@
+{
+  "name": "rewrite",
+  "version": "1.0.0",
+  "description": "rewrite for spa hosted at cloudformation",
+  "main": "index.js",
+  "author": "Louis Larry",
+  "license": "MIT"
+}
