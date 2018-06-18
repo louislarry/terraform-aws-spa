@@ -4,7 +4,19 @@ resource "aws_lambda_function" "rewrite" {
   function_name    = "${local.hosted_zone_dash}-rewrite"
   filename         = "${data.archive_file.rewrite.output_path}"
   source_code_hash = "${data.archive_file.rewrite.output_base64sha256}"
-  role             = "${aws_iam_role.rewrite.arn}"
+  role             = "${aws_iam_role.lambda_edge.arn}"
+  runtime          = "nodejs8.10"
+  handler          = "index.handler"
+  memory_size      = 128
+  timeout          = 3
+  publish          = true
+}
+
+resource "aws_lambda_function" "add_cors" {
+  function_name    = "${local.hosted_zone_dash}-add-cors"
+  filename         = "${data.archive_file.add_cors.output_path}"
+  source_code_hash = "${data.archive_file.add_cors.output_base64sha256}"
+  role             = "${aws_iam_role.lambda_edge.arn}"
   runtime          = "nodejs8.10"
   handler          = "index.handler"
   memory_size      = 128
@@ -18,8 +30,14 @@ data "archive_file" "rewrite" {
   output_path = "${path.module}/lambda-rewrite.zip"
 }
 
-resource "aws_iam_role" "rewrite" {
-  name               = "${local.hosted_zone_dash}-rewrite-role"
+data "archive_file" "add_cors" {
+  type        = "zip"
+  source_dir  = "${path.module}/lambda-add-cors/src"
+  output_path = "${path.module}/lambda-add-cors.zip"
+}
+
+resource "aws_iam_role" "lambda_edge" {
+  name               = "${local.hosted_zone_dash}-lambda-edge-role"
   assume_role_policy = "${data.aws_iam_policy_document.lambda_basic.json}"
 }
 
@@ -39,7 +57,7 @@ data "aws_iam_policy_document" "lambda_basic" {
 }
 
 resource "aws_iam_role_policy_attachment" "basic" {
-  role       = "${aws_iam_role.rewrite.name}"
+  role       = "${aws_iam_role.lambda_edge.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
@@ -49,4 +67,12 @@ output "lambda_rewrite_arn" {
 
 output "lambda_rewrite_qualified_arn" {
   value = "${aws_lambda_function.rewrite.qualified_arn}"
+}
+
+output "lambda_add_cors_arn" {
+  value = "${aws_lambda_function.add_cors.arn}"
+}
+
+output "lambda_add_cors_qualified_arn" {
+  value = "${aws_lambda_function.add_cors.qualified_arn}"
 }

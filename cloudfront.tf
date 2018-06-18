@@ -47,6 +47,11 @@ resource "aws_cloudfront_distribution" "origin" {
       event_type = "origin-request"
       lambda_arn = "${aws_lambda_function.rewrite.qualified_arn}"
     }
+
+    lambda_function_association {
+      event_type = "viewer-response"
+      lambda_arn = "${aws_lambda_function.add_cors.qualified_arn}"
+    }
   }
 
   restrictions {

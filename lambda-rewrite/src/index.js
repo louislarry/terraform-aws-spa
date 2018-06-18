@@ -1,8 +1,8 @@
 // lambda-rewrite
 // @ts-check
 
-const path = require('path');
-const { STATUS_CODES } = require('http');
+const path = require("path");
+const { STATUS_CODES } = require("http");
 
 exports.handler = (event, context, callback) => {
   const { request } = event.Records[0].cf;
@@ -10,18 +10,23 @@ exports.handler = (event, context, callback) => {
 
   const isAsset = /assets/.test(request.uri);
   const isBagubagu = /bagubagu/.test(request.uri);
+  const isStellarToml = /stellar\.toml/.test(request.uri);
+
+  if (isStellarToml) {
+    return callback(null, { ...request, uri: "/assets/stellar.toml" });
+  }
 
   if (isAsset) {
     return callback(null, request);
   }
 
-  if (parsedPath.ext === '') {
-    return callback(null, { ...request, uri: '/index.html' });
+  if (parsedPath.ext === "") {
+    return callback(null, { ...request, uri: "/index.html" });
   }
 
   // easter egg
   if (isBagubagu) {
-    const redirect = redirectTo('https://bagubagu.com');
+    const redirect = redirectTo("https://bagubagu.com");
     return callback(null, redirect);
   }
 
@@ -31,18 +36,18 @@ exports.handler = (event, context, callback) => {
 function addBagubaguHeader(headers) {
   return {
     ...headers,
-    'x-bagubagu': [
-      { key: 'X-Bagubagu', value: 'We are hiring! bagubagu.com/jobs' }
+    "x-bagubagu": [
+      { key: "X-Bagubagu", value: "We are hiring! bagubagu.com/jobs" }
     ]
   };
 }
 
 function redirectTo(uri) {
   return {
-    status: '301',
-    statusDescription: STATUS_CODES['301'],
+    status: "301",
+    statusDescription: STATUS_CODES["301"],
     headers: {
-      location: [{ key: 'Location', value: uri }]
+      location: [{ key: "Location", value: uri }]
     }
   };
 }
