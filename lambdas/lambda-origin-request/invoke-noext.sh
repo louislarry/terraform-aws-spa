@@ -1,1 +1,1 @@
-sam local invoke RewriteFunction -e event-noext.json
+sam local invoke OriginRequestFunction -e event-noext.json

@@ -1,4 +1,4 @@
-// lambda-rewrite
+// lambda-origin-request
 // @ts-check
 
 const path = require("path");
@@ -9,11 +9,10 @@ exports.handler = (event, context, callback) => {
   const parsedPath = path.parse(request.uri);
 
   const isAsset = /assets/.test(request.uri);
-  const isBagubagu = /bagubagu/.test(request.uri);
   const isStellarToml = /stellar\.toml/.test(request.uri);
 
   if (isStellarToml) {
-    return callback(null, { ...request, uri: "/assets/stellar.toml" });
+    return callback(null, { ...request, uri: "/.well-known/stellar.toml" });
   }
 
   if (isAsset) {
@@ -24,23 +23,8 @@ exports.handler = (event, context, callback) => {
     return callback(null, { ...request, uri: "/index.html" });
   }
 
-  // easter egg!
-  if (isBagubagu) {
-    const redirect = redirectTo("https://bagubagu.com");
-    return callback(null, redirect);
-  }
-
   return callback(null, request);
 };
-
-function addBagubaguHeader(headers) {
-  return {
-    ...headers,
-    "x-bagubagu": [
-      { key: "X-Bagubagu", value: "We are hiring! bagubagu.com/jobs" }
-    ]
-  };
-}
 
 function redirectTo(uri) {
   return {

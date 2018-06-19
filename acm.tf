@@ -1,4 +1,4 @@
-# spa/acm_with_dns_validation
+# spa/acm
 
 data "aws_route53_zone" "zone" {
   name = "${var.hosted_zone}."

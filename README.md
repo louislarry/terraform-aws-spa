@@ -1,10 +1,10 @@
-# Terraform SPA template
+# Terraform AWS SPA 
 
-Build infrastructure for Angular based SPA.
+Create AWS infrastructure resources for a Single Page Application.
 
 ## How to use
 
-1.  create a `infra/main.tf` in your project root directory. Replace the `aws.profile` and `spa.hosted_zone`
+1.  create a `infra/main.tf` in your project root directory. Replace the `aws.profile` and `spa.hosted_zone`. Do not change the `aws.region`, ACM certificate is required to be in `us-east-1`.
 
     ```terraform
     # main.tf
@@ -15,7 +15,7 @@ Build infrastructure for Angular based SPA.
     }
 
     module "spa" {
-        source        = "github.com/bagubagu/terraform-aws-spa"
+        source        = "github.com/louislarry/terraform-aws-spa"
         hosted_zone   = "example.com"
         force_destroy = true
     }
@@ -46,10 +46,9 @@ If hosted_zone is `example_com`:
 ### Lambda@Edge Features
 
 - Return correct `stellar.toml` headers
-- Return everyting in '/assets' as is
+- Return everything in '/assets' as is
 - Request for uri without extension gets redirected to `/index.html`
 - Redirect errors (4xx and 5xx) to `/index.html`
-- Easter egg
 
 ## FAQ
 
@@ -69,4 +68,8 @@ If hosted_zone is `example_com`:
 
     __Answer:__
 
-    Just run `terraform apply` again and you'll be fine. It is caused by a bug in terraform cloudfront_distribution template.
+    It's a bug. Just re-run `terraform apply` and you should be be fine the second time.
+
+## LICENSE
+
+MIT

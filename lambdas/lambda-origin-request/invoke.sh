@@ -1,1 +1,1 @@
-sam local invoke RewriteFunction -e event.json 
+sam local invoke OriginRequestFunction -e event.json 

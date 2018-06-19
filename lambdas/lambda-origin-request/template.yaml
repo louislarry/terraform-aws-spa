@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Lambda@edge rewrite function for Angular application
+Description: Cloudfront origin-request
     
 Resources:
-    RewriteFunction:
+    OriginRequestFunction:
         Type: AWS::Serverless::Function
         Properties:
             CodeUri: src/

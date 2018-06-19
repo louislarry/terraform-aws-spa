@@ -1,3 +1,3 @@
 # spa/main
-# nothing here. see resources/*
+# nothing here
 
