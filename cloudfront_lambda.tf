@@ -24,6 +24,18 @@ resource "aws_lambda_function" "add_cors" {
   publish          = true
 }
 
+resource "aws_lambda_function" "origin_response" {
+  function_name    = "${local.hosted_zone_dash}-origin-response"
+  filename         = "${data.archive_file.origin_response.output_path}"
+  source_code_hash = "${data.archive_file.origin_response.output_base64sha256}"
+  role             = "${aws_iam_role.lambda_edge.arn}"
+  runtime          = "nodejs8.10"
+  handler          = "index.handler"
+  memory_size      = 128
+  timeout          = 3
+  publish          = true
+}
+
 data "archive_file" "rewrite" {
   type        = "zip"
   source_dir  = "${path.module}/lambda-rewrite/src"
@@ -34,6 +46,12 @@ data "archive_file" "add_cors" {
   type        = "zip"
   source_dir  = "${path.module}/lambda-add-cors/src"
   output_path = "${path.module}/lambda-add-cors.zip"
+}
+
+data "archive_file" "origin_response" {
+  type        = "zip"
+  source_dir  = "${path.module}/lambda-origin-response/src"
+  output_path = "${path.module}/lambda-origin-response.zip"
 }
 
 resource "aws_iam_role" "lambda_edge" {
@@ -65,14 +83,18 @@ output "lambda_rewrite_arn" {
   value = "${aws_lambda_function.rewrite.arn}"
 }
 
-output "lambda_rewrite_qualified_arn" {
-  value = "${aws_lambda_function.rewrite.qualified_arn}"
-}
-
 output "lambda_add_cors_arn" {
   value = "${aws_lambda_function.add_cors.arn}"
 }
 
+output "lambda_rewrite_qualified_arn" {
+  value = "${aws_lambda_function.rewrite.qualified_arn}"
+}
+
 output "lambda_add_cors_qualified_arn" {
   value = "${aws_lambda_function.add_cors.qualified_arn}"
+}
+
+output "lambda_origin_response_qualified_arn" {
+  value = "${aws_lambda_function.origin_response.qualified_arn}"
 }

@@ -24,7 +24,7 @@ exports.handler = (event, context, callback) => {
     return callback(null, { ...request, uri: "/index.html" });
   }
 
-  // easter egg
+  // easter egg!
   if (isBagubagu) {
     const redirect = redirectTo("https://bagubagu.com");
     return callback(null, redirect);

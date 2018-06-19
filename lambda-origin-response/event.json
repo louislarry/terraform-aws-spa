@@ -12,7 +12,7 @@
         "request": {
           "clientIp": "2001:0db8:85a3:0:0:8a2e:0370:7334",
           "method": "GET",
-          "uri": "/.well-known/stellar.toml",
+          "uri": "/picture.jpg",
           "querystring": "size=large",
           "headers": {
             "host": [
@@ -30,8 +30,8 @@
           }
         },
         "response": {
-          "status": "200",
-          "statusDescription": "OK",
+          "status": "404",
+          "statusDescription": "Not found",
           "headers": {
             "server": [
               {
