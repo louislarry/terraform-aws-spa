@@ -1,4 +1,4 @@
-# spa/lambda_at_edge
+# spa/cloudfront_lambda
 
 resource "aws_lambda_function" "rewrite" {
   function_name    = "${local.hosted_zone_dash}-rewrite"

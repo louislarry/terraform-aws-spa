@@ -1,4 +1,6 @@
-# Terraform template for Angular SPA Application
+# Terraform SPA template
+
+Build infrastructure for Angular based SPA.
 
 ## How to use
 
@@ -9,12 +11,12 @@
 
     provider "aws" {
         region  = "us-east-1"
-        profile = "chyngeAdmin"
+        profile = "exampleAdmin"
     }
 
     module "spa" {
         source        = "github.com/bagubagu/terraform-spa"
-        hosted_zone   = "chynge.com"
+        hosted_zone   = "example.com"
         force_destroy = true
     }
     ```
@@ -29,7 +31,7 @@
 
 1.  Bob's your uncle.
 
-### What does this do?
+## What does this do?
 
 If hosted_zone is `example_com`:
 
@@ -49,7 +51,7 @@ If hosted_zone is `example_com`:
 - Redirect errors (4xx and 5xx) to `/index.html`
 - Easter egg
 
-### FAQ
+## FAQ
 
 1.  I got following error
 
