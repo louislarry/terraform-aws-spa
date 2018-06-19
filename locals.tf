@@ -5,6 +5,6 @@
 locals {
   s3_origin_id     = "myS3Origin"
   hosted_zone_dash = "${replace(var.hosted_zone, ".", "-")}"
-  log_bucket       = "${local.hosted_zone_dash}-cloudfront-log"
   origin_bucket    = "${local.hosted_zone_dash}-origin"
+  log_bucket       = "${local.hosted_zone_dash}-cloudfront-log"
 }

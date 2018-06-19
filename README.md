@@ -15,7 +15,7 @@ Build infrastructure for Angular based SPA.
     }
 
     module "spa" {
-        source        = "github.com/bagubagu/terraform-spa"
+        source        = "github.com/bagubagu/terraform-aws-spa"
         hosted_zone   = "example.com"
         force_destroy = true
     }

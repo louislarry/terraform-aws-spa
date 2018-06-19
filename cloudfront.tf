@@ -45,7 +45,7 @@ resource "aws_cloudfront_distribution" "origin" {
 
     lambda_function_association {
       event_type = "origin-request"
-      lambda_arn = "${aws_lambda_function.rewrite.qualified_arn}"
+      lambda_arn = "${aws_lambda_function.origin_request.qualified_arn}"
     }
 
     lambda_function_association {
@@ -55,7 +55,7 @@ resource "aws_cloudfront_distribution" "origin" {
 
     lambda_function_association {
       event_type = "viewer-response"
-      lambda_arn = "${aws_lambda_function.add_cors.qualified_arn}"
+      lambda_arn = "${aws_lambda_function.viewer_response.qualified_arn}"
     }
   }
 
@@ -73,16 +73,4 @@ resource "aws_cloudfront_distribution" "origin" {
   }
 
   tags {}
-}
-
-output "cloudfront_distribution_domain_name" {
-  value = "${aws_cloudfront_distribution.origin.domain_name}"
-}
-
-output "cloudfront_distribution_id" {
-  value = "${aws_cloudfront_distribution.origin.id}"
-}
-
-output "cloudfront_distribution_arn" {
-  value = "${aws_cloudfront_distribution.origin.arn}"
 }
