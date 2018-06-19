@@ -11,6 +11,10 @@ resource "aws_route53_record" "apex" {
     zone_id                = "${aws_cloudfront_distribution.origin.hosted_zone_id}"
     evaluate_target_health = true
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_route53_record" "www" {
@@ -20,5 +24,8 @@ resource "aws_route53_record" "www" {
   type    = "CNAME"
   ttl     = "300"
   records = ["${aws_cloudfront_distribution.origin.domain_name}"]
-  allow_overwrite = true
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
