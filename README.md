@@ -45,9 +45,7 @@ If hosted_zone is `example_com`:
 
 ### Lambda@Edge Features
 
-- Return correct `stellar.toml` headers. Put `stellar.toml` in `/assets`, not at `/.well-known`
-- Return everything in `/assets` as is
-- Request for uri without extension gets redirected to `/index.html`
+- Support for `stellar.toml` (enable CORS)
 - Redirect errors (4xx and 5xx) to `/index.html`
 
 ## FAQ
@@ -68,7 +66,7 @@ If hosted_zone is `example_com`:
 
     __Answer:__
 
-    It's a bug. Just re-run `terraform apply` and you should be be fine the second time.
+    It's a bug. Please re-run `terraform apply` and you should be be fine the second time.
 
 ## LICENSE
 
